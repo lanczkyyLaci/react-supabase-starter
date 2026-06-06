@@ -4,22 +4,13 @@ import type { Session, User } from '@supabase/supabase-js';
 
 import { supabase } from '../supabase';
 import { AuthContext } from './auth-context';
-
-async function fetchRole(userId: string): Promise<string | null> {
-  const { data, error } = await supabase
-    .from('profile')
-    .select('role')
-    .eq('id', userId)
-    .single();
-
-  if (error || !data) return null;
-  return data.role;
-}
+import { getUserProfile } from '@/api/get-user-profile.ts';
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [role, setRole] = useState<string | null>(null);
+  const [name, setName] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -29,8 +20,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setUser(currentUser);
 
       if (currentUser) {
-        const userRole = await fetchRole(currentUser.id);
-        setRole(userRole);
+        const profile = await getUserProfile(currentUser.id);
+        setRole(profile.role);
+        setName(profile.name);
       }
 
       setLoading(false);
@@ -44,10 +36,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setUser(currentUser);
 
       if (currentUser) {
-        const userRole = await fetchRole(currentUser.id);
-        setRole(userRole);
+        const profile = await getUserProfile(currentUser.id);
+        setRole(profile.role);
+        setName(profile.name);
       } else {
         setRole(null);
+        setName(null);
       }
 
       setLoading(false);
@@ -56,6 +50,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return () => subscription.unsubscribe();
   }, []);
 
+  if (loading) {
+    return null;
+  }
+
   return (
     <AuthContext.Provider
       value={{
@@ -63,6 +61,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         session,
         role,
         loading,
+        name,
       }}
     >
       {children}

@@ -1,6 +1,11 @@
-import {LogoutButton} from "@/components/components/logout-button/logout-button.tsx";
+import { ContentLayout } from '@/components/layouts/content-layout.tsx';
 
-const DashboardPage = () => <div>Dashboard
-    <LogoutButton />
-</div>
-export default DashboardPage
+const DashboardPage = () => {
+  return (
+    <ContentLayout title="Dashboard">
+      <p>asdasd</p>
+    </ContentLayout>
+  );
+};
+
+export default DashboardPage;

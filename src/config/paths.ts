@@ -27,8 +27,12 @@ export const paths = {
       getHref: () => '/app',
     },
     profile: {
-      path: '',
+      path: 'profile',
       getHref: () => '/app/profile',
+    },
+    newUser: {
+      path: 'new-user',
+      getHref: () => '/app/new-user',
     },
   },
 } as const;

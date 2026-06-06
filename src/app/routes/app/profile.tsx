@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { Spinner } from '@/components/ui/spinner.tsx';
-import { usersQuery } from '@/api/query-options/query-options.ts';
+import { usersQuery } from '@/api/query-options/query-users.ts';
+import { ContentLayout } from '@/components/layouts/content-layout.tsx';
 
 const Profile = () => {
   const { data: users, isLoading } = useQuery(usersQuery());
@@ -14,8 +15,7 @@ const Profile = () => {
   }
 
   return (
-    <div className="space-y-4 p-3">
-      <h1 className="text-2xl font-bold">Felhasználók</h1>
+    <ContentLayout title="Profile">
       <div className="space-y-2">
         {users?.map((user, index) => (
           <div key={index}>
@@ -24,7 +24,7 @@ const Profile = () => {
           </div>
         ))}
       </div>
-    </div>
+    </ContentLayout>
   );
 };
 

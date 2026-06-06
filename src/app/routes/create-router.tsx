@@ -37,12 +37,16 @@ export const createAppRouter = (queryClient: QueryClient) =>
       children: [
         {
           index: true,
-          path: paths.app.dashboard.getHref(),
+          path: paths.app.dashboard.path,
           lazy: () => import('./app/dashboard').then(convert(queryClient)),
         },
         {
-          path: paths.app.profile.getHref(),
-          lazy: () => import('./app/profile.tsx').then(convert(queryClient)),
+          path: paths.app.profile.path,
+          lazy: () => import('./app/profile').then(convert(queryClient)),
+        },
+        {
+          path: paths.app.newUser.path,
+          lazy: () => import('./app/new-user').then(convert(queryClient)),
         },
       ],
     },

@@ -6,10 +6,10 @@ import {
   Command,
   Frame,
   GalleryVerticalEnd,
-  Map,
   PieChart,
   Settings2,
   SquareTerminal,
+  UserPlus,
 } from 'lucide-react';
 
 import {
@@ -27,11 +27,6 @@ import { paths } from '@/config/paths.ts';
 
 // This is sample data.
 const data = {
-  user: {
-    name: 'shadcn',
-    email: 'm@example.com',
-    avatar: '/avatars/shadcn.jpg',
-  },
   teams: [
     {
       name: 'Acme Inc',
@@ -148,9 +143,9 @@ const data = {
       icon: PieChart,
     },
     {
-      name: 'Travel',
-      url: '#',
-      icon: Map,
+      name: 'New User',
+      url: paths.app.newUser.getHref(),
+      icon: UserPlus,
     },
   ],
 };
@@ -166,7 +161,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavProjects projects={data.projects} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
